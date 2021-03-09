@@ -8,7 +8,7 @@ namespace TestLayer
     public class UnitTest1
     {
         [Fact]
-        public void TestCalculateToll()
+        public void TestCommercialTollProcessorCalculateToll()
         {
             CommercialTollProcessor commercialTollProcessor = new CommercialTollProcessor(new Dictionary<string, double>()
                 {
@@ -23,10 +23,13 @@ namespace TestLayer
             (cost,axle) = commercialTollProcessor.CalculateToll(1);
             Assert.Equal(2.50, cost);
             Assert.Equal("2 axles", axle);
-            
+            Assert.Throws<Exception>(
+                () => commercialTollProcessor.CalculateToll(10)
+                );
+
         }
         [Fact]
-        public void TestDisplayMenu()
+        public void TestCommercialTollProcessorDisplayMenu()
         {
             Dictionary<string, double> dic = new Dictionary<string, double>()
                 {
@@ -46,7 +49,7 @@ namespace TestLayer
         [Fact]
         public void TestResidentalCalculateToll()
         {
-            CommercialTollProcessor commercialTollProcessor = new CommercialTollProcessor(new Dictionary<string, double>()
+            ResidentialTollProcessor residentalTollProcessor = new ResidentialTollProcessor(new Dictionary<string, double>()
                 {
                 {"2 axles" ,2.00},
                 {"3 axles" ,3.00},
@@ -54,9 +57,39 @@ namespace TestLayer
             });
             double cost;
             string axle;
-            (cost, axle) = commercialTollProcessor.CalculateToll(1);
+            (cost, axle) = residentalTollProcessor.CalculateToll(1);
             Assert.Equal(2.00, cost);
             Assert.Equal("2 axles", axle);
+            Assert.Throws<Exception>(
+                () => residentalTollProcessor.CalculateToll(10)
+                );
+        }
+
+        [Fact]
+        public void TestResidentalDisplayMenu()
+        {
+            Dictionary<string, double> dic = new Dictionary<string, double>()
+                {
+                {"2 axles" ,2.00},
+                {"3 axles" ,3.00},
+                {"4 axles" ,4.00}
+            };
+            ResidentialTollProcessor commercialTollProcessor = new ResidentialTollProcessor(dic);
+
+            Assert.Equal<Dictionary<string, double>>(dic, commercialTollProcessor.DisplayMenu());
+
+        }
+
+        [Fact]
+        public void TestTollProcessorFactoryFactoryMethod()
+        {
+            TollProcessorFactory tollProcessorFactory = new TollProcessorFactory();
+
+            Assert.IsType<CommercialTollProcessor>(tollProcessorFactory.FactoryMethod(2));
+            Assert.IsType<ResidentialTollProcessor>(tollProcessorFactory.FactoryMethod(1));
+            Assert.Throws<Exception>(
+                ()=> tollProcessorFactory.FactoryMethod(8)
+                );
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 namespace BusinessLayer
 {
     //ResidentialTollProcessor class implements to ITollProcessor interface
-    class ResidentialTollProcessor : ITollProcessor
+    public class ResidentialTollProcessor : ITollProcessor
     {
         Dictionary<string, double> tollitems; //Residential toll items store in a dictonary with key of text and value as rate
 
@@ -17,7 +17,7 @@ namespace BusinessLayer
 
 
         //Calculate the rate on the selection given by argument selection, no matching throws error as wrong input
-        Tuple<double, string> ITollProcessor.CalculateToll(int selection)
+        public Tuple<double, string> CalculateToll(int selection)
         {
             double cost;
             string axle;
@@ -44,7 +44,7 @@ namespace BusinessLayer
         }
 
         //Display the Residental submenu 
-        Dictionary<string, double> ITollProcessor.DisplayMenu()
+        public Dictionary<string, double> DisplayMenu()
         {
             Console.WriteLine("Residental -Submenu ------------");
             Console.WriteLine("Select number for menu option:");
