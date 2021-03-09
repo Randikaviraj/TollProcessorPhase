@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BusinessLayer;
 
 namespace DisplayLayer
@@ -6,6 +8,7 @@ namespace DisplayLayer
     class Program
     {
         private static TollProcessorFactory tollProcessorFactory = new TollProcessorFactory();
+        private static InventoryManager inventoryManager = new InventoryManager();
         static void Main(string[] args)
         {
             int selection;
@@ -59,7 +62,16 @@ namespace DisplayLayer
             while (true)
             {
                 ITollProcessor itollProcesser = tollProcessorFactory.FactoryMethod(selection);
-                itollProcesser.DisplayMenu();
+                Dictionary<string, double> tollitems=itollProcesser.DisplayMenu();
+
+                Console.WriteLine("Commercial -Submenu ------------");
+                Console.WriteLine("Select number for menu option:");
+                for (int i = 0; i < tollitems.Count; i++)
+                {
+                    Console.WriteLine(" " + (i + 1) + ". " + tollitems.ElementAt(i).Key);
+                }
+
+
                 try
                 {
                     subMenuSelction = Convert.ToInt32(Console.ReadLine());
@@ -82,7 +94,7 @@ namespace DisplayLayer
         static void ShowManagementOption()
         {
             int subMenuSelction;
-            InventoryManager inventoryManager = new InventoryManager();
+            
             while (true)
             {
                 Console.WriteLine(" 1.  Add Short Trailer");
@@ -92,8 +104,8 @@ namespace DisplayLayer
                 Console.WriteLine(" 5.  View Trailers");
                 Console.WriteLine(" 6.  Add Tractor");
                 Console.WriteLine(" 7.  Remove Tractor");
-                Console.WriteLine(" 8.   View Tractors");
-                Console.WriteLine(" 9.   Back");
+                Console.WriteLine(" 8.  View Tractors");
+                Console.WriteLine(" 9.  Back");
 
                 try
                 {
@@ -107,6 +119,8 @@ namespace DisplayLayer
                             {
 
                                 inventoryManager.AddNewTrailer(trailer1);
+                                Console.WriteLine("ADDED ");
+                                Console.WriteLine("");
                             }
 
                             break;
@@ -117,6 +131,8 @@ namespace DisplayLayer
                             {
 
                                 inventoryManager.AddNewTrailer(trailer2);
+                                Console.WriteLine("ADDED ");
+                                Console.WriteLine("");
                             }
                             break;
                         case 3:
@@ -124,6 +140,8 @@ namespace DisplayLayer
                             if (id != null)
                             {
                                 inventoryManager.RemoveTrailer(id);
+                                Console.WriteLine("REMOVED ");
+                                Console.WriteLine("");
                             }
                             break;
                         case 4:
@@ -131,10 +149,12 @@ namespace DisplayLayer
                             if (id2 != null)
                             {
                                 inventoryManager.RemoveTrailer(id2);
+                                Console.WriteLine("REMOVED ");
+                                Console.WriteLine("");
                             }
                             break;
                         case 5:
-                            foreach (var ele1 in inventoryManager.ViewTractors())
+                            foreach (var ele1 in inventoryManager.ViewTrailers())
                             {
                                 Console.WriteLine(ele1.Key);
                             }
@@ -146,6 +166,8 @@ namespace DisplayLayer
                             if (tractor != null)
                             {
                                 inventoryManager.AddNewTractor(tractor);
+                                Console.WriteLine("ADDED ");
+                                Console.WriteLine("");
                             }
                             break;
                         case 7:
@@ -153,6 +175,8 @@ namespace DisplayLayer
                             if (id3 != null)
                             {
                                 inventoryManager.RemoveTractor(id3);
+                                Console.WriteLine("REMOVED ");
+                                Console.WriteLine("");
                             }
                             break;
                         case 8:

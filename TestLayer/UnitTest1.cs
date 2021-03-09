@@ -7,6 +7,10 @@ namespace TestLayer
 {
     public class UnitTest1
     {
+
+        /// <summary>
+        /// CommercialTollProcessor  test functions
+        /// </summary>
         [Fact]
         public void TestCommercialTollProcessorCalculateToll()
         {
@@ -45,6 +49,9 @@ namespace TestLayer
 
         }
 
+        /// <summary>
+        /// ResidentialTollProcessor  test functions
+        /// </summary>
 
         [Fact]
         public void TestResidentalCalculateToll()
@@ -80,6 +87,10 @@ namespace TestLayer
 
         }
 
+        /// <summary>
+        ///  TollProcessorFactory test functions
+        /// </summary>
+
         [Fact]
         public void TestTollProcessorFactoryFactoryMethod()
         {
@@ -91,5 +102,44 @@ namespace TestLayer
                 ()=> tollProcessorFactory.FactoryMethod(8)
                 );
         }
+
+
+
+        /// <summary>
+        /// InventoryManager test functions
+        /// </summary>
+        [Fact]
+        public void TestInventoryManagerViewTractors()
+        {
+            InventoryManager inventoryManager = new InventoryManager();
+            Assert.IsType<Dictionary<string, Tractor>>(inventoryManager.ViewTractors());
+        }
+
+        [Fact]
+        public void TestInventoryManagerViewTrailers()
+        {
+            InventoryManager inventoryManager = new InventoryManager();
+            Assert.IsType<Dictionary<string, Trailer>>(inventoryManager.ViewTrailers());
+        }
+
+
+        [Fact]
+        public void InventoryManagerAddNewTrailer()
+        {
+            InventoryManager inventoryManager = new InventoryManager();
+            Assert.Throws<Exception>(
+
+                ()=>inventoryManager.AddNewTrailer(new FtTrailer(
+                    "TR00001","01", "Empt",12.1,12.0,11))
+                );
+
+            Assert.Throws<Exception>(
+
+                () => inventoryManager.AddNewTractor(new Tractor(
+                    "TC0001", "01", "Fuele"))
+                );
+        }
+
+
     }
 }

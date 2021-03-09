@@ -51,12 +51,7 @@ namespace BusinessLayer
         //Display the CommercialTollProcessor submenu 
         public Dictionary<string, double> DisplayMenu()
         {
-            Console.WriteLine("Commercial -Submenu ------------");
-            Console.WriteLine("Select number for menu option:");
-            for (int i = 0; i < tollitems.Count; i++)
-            {
-                Console.WriteLine(" " + (i + 1)+ ". " + tollitems.ElementAt(i).Key);
-            }
+            
             return tollitems;
         }
     }
